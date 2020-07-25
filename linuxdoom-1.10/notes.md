@@ -76,3 +76,11 @@ First attempt, just comment them (all sound interface references) from everywher
 # Regex ...
 (^|\W)S_
 ```
+
+Okay. There were too many calls to the sound codes -- it was quicker to update the
+implementations in `s_sound.c`. Exe generated.
+
+---
+
+## Executable.
+WAD files are missing. Need to add those from the DOOM shareware release.
