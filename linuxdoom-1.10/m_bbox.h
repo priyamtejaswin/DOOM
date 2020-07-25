@@ -23,7 +23,10 @@
 #ifndef __M_BBOX__
 #define __M_BBOX__
 
-#include <values.h>
+// Commenting this out for now ...
+// #include <values.h>
+// Adding `doomtype.h` for the constants ...
+#include "doomtype.h"
 
 #include "m_fixed.h"
 

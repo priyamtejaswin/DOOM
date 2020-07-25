@@ -6,20 +6,22 @@
 #
 CC=  gcc  # gcc or g++
 
-CFLAGS=-g -Wall -DNORMALUNIX -DLINUX # -DUSEASM 
+# -DOSX used to be -DLINUX, skipped it for now.
+CFLAGS=-g -Wall -DNORMALUNIX # -DUSEASM  
 LDFLAGS=-L/usr/X11R6/lib
-LIBS=-lXext -lX11 -lnsl -lm
+# Removed -lnsl // Already present in MacOS C lib.
+LIBS=-lXext -lX11 -lm
 
 # subdirectory for objects
 O=linux
 
+# REMOVED $(O)/i_sound.o from OBJS
 # not too sophisticated dependency
 OBJS=				\
 		$(O)/doomdef.o		\
 		$(O)/doomstat.o		\
 		$(O)/dstrings.o		\
 		$(O)/i_system.o		\
-		$(O)/i_sound.o		\
 		$(O)/i_video.o		\
 		$(O)/i_net.o			\
 		$(O)/tables.o			\
