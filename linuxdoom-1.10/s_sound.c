@@ -160,7 +160,8 @@ void S_StopChannel(int cnum);
 //
 void S_Init
 ( int		sfxVolume,
-  int		musicVolume )
+  int		musicVolume ) {}
+/*
 {  
   int		i;
 
@@ -190,6 +191,7 @@ void S_Init
   for (i=1 ; i<NUMSFX ; i++)
     S_sfx[i].lumpnum = S_sfx[i].usefulness = -1;
 }
+*/
 
 
 
@@ -255,149 +257,151 @@ void
 S_StartSoundAtVolume
 ( void*		origin_p,
   int		sfx_id,
-  int		volume )
-{
+  int		volume ) {}
 
-  int		rc;
-  int		sep;
-  int		pitch;
-  int		priority;
-  sfxinfo_t*	sfx;
-  int		cnum;
+// {
+
+//   int		rc;
+//   int		sep;
+//   int		pitch;
+//   int		priority;
+//   sfxinfo_t*	sfx;
+//   int		cnum;
   
-  mobj_t*	origin = (mobj_t *) origin_p;
+//   mobj_t*	origin = (mobj_t *) origin_p;
   
   
-  // Debug.
-  /*fprintf( stderr,
-  	   "S_StartSoundAtVolume: playing sound %d (%s)\n",
-  	   sfx_id, S_sfx[sfx_id].name );*/
+//   // Debug.
+//   /*fprintf( stderr,
+//   	   "S_StartSoundAtVolume: playing sound %d (%s)\n",
+//   	   sfx_id, S_sfx[sfx_id].name );*/
   
-  // check for bogus sound #
-  if (sfx_id < 1 || sfx_id > NUMSFX)
-    I_Error("Bad sfx #: %d", sfx_id);
+//   // check for bogus sound #
+//   if (sfx_id < 1 || sfx_id > NUMSFX)
+//     I_Error("Bad sfx #: %d", sfx_id);
   
-  sfx = &S_sfx[sfx_id];
+//   sfx = &S_sfx[sfx_id];
   
-  // Initialize sound parameters
-  if (sfx->link)
-  {
-    pitch = sfx->pitch;
-    priority = sfx->priority;
-    volume += sfx->volume;
+//   // Initialize sound parameters
+//   if (sfx->link)
+//   {
+//     pitch = sfx->pitch;
+//     priority = sfx->priority;
+//     volume += sfx->volume;
     
-    if (volume < 1)
-      return;
+//     if (volume < 1)
+//       return;
     
-    if (volume > snd_SfxVolume)
-      volume = snd_SfxVolume;
-  }	
-  else
-  {
-    pitch = NORM_PITCH;
-    priority = NORM_PRIORITY;
-  }
+//     if (volume > snd_SfxVolume)
+//       volume = snd_SfxVolume;
+//   }	
+//   else
+//   {
+//     pitch = NORM_PITCH;
+//     priority = NORM_PRIORITY;
+//   }
 
 
-  // Check to see if it is audible,
-  //  and if not, modify the params
-  if (origin && origin != players[consoleplayer].mo)
-  {
-    rc = S_AdjustSoundParams(players[consoleplayer].mo,
-			     origin,
-			     &volume,
-			     &sep,
-			     &pitch);
+//   // Check to see if it is audible,
+//   //  and if not, modify the params
+//   if (origin && origin != players[consoleplayer].mo)
+//   {
+//     rc = S_AdjustSoundParams(players[consoleplayer].mo,
+// 			     origin,
+// 			     &volume,
+// 			     &sep,
+// 			     &pitch);
 	
-    if ( origin->x == players[consoleplayer].mo->x
-	 && origin->y == players[consoleplayer].mo->y)
-    {	
-      sep 	= NORM_SEP;
-    }
+//     if ( origin->x == players[consoleplayer].mo->x
+// 	 && origin->y == players[consoleplayer].mo->y)
+//     {	
+//       sep 	= NORM_SEP;
+//     }
     
-    if (!rc)
-      return;
-  }	
-  else
-  {
-    sep = NORM_SEP;
-  }
+//     if (!rc)
+//       return;
+//   }	
+//   else
+//   {
+//     sep = NORM_SEP;
+//   }
   
-  // hacks to vary the sfx pitches
-  if (sfx_id >= sfx_sawup
-      && sfx_id <= sfx_sawhit)
-  {	
-    pitch += 8 - (M_Random()&15);
+//   // hacks to vary the sfx pitches
+//   if (sfx_id >= sfx_sawup
+//       && sfx_id <= sfx_sawhit)
+//   {	
+//     pitch += 8 - (M_Random()&15);
     
-    if (pitch<0)
-      pitch = 0;
-    else if (pitch>255)
-      pitch = 255;
-  }
-  else if (sfx_id != sfx_itemup
-	   && sfx_id != sfx_tink)
-  {
-    pitch += 16 - (M_Random()&31);
+//     if (pitch<0)
+//       pitch = 0;
+//     else if (pitch>255)
+//       pitch = 255;
+//   }
+//   else if (sfx_id != sfx_itemup
+// 	   && sfx_id != sfx_tink)
+//   {
+//     pitch += 16 - (M_Random()&31);
     
-    if (pitch<0)
-      pitch = 0;
-    else if (pitch>255)
-      pitch = 255;
-  }
+//     if (pitch<0)
+//       pitch = 0;
+//     else if (pitch>255)
+//       pitch = 255;
+//   }
 
-  // kill old sound
-  S_StopSound(origin);
+//   // kill old sound
+//   S_StopSound(origin);
 
-  // try to find a channel
-  cnum = S_getChannel(origin, sfx);
+//   // try to find a channel
+//   cnum = S_getChannel(origin, sfx);
   
-  if (cnum<0)
-    return;
+//   if (cnum<0)
+//     return;
 
-  //
-  // This is supposed to handle the loading/caching.
-  // For some odd reason, the caching is done nearly
-  //  each time the sound is needed?
-  //
+//   //
+//   // This is supposed to handle the loading/caching.
+//   // For some odd reason, the caching is done nearly
+//   //  each time the sound is needed?
+//   //
   
-  // get lumpnum if necessary
-  if (sfx->lumpnum < 0)
-    sfx->lumpnum = I_GetSfxLumpNum(sfx);
+//   // get lumpnum if necessary
+//   if (sfx->lumpnum < 0)
+//     sfx->lumpnum = I_GetSfxLumpNum(sfx);
 
-#ifndef SNDSRV
-  // cache data if necessary
-  if (!sfx->data)
-  {
-    fprintf( stderr,
-	     "S_StartSoundAtVolume: 16bit and not pre-cached - wtf?\n");
+// #ifndef SNDSRV
+//   // cache data if necessary
+//   if (!sfx->data)
+//   {
+//     fprintf( stderr,
+// 	     "S_StartSoundAtVolume: 16bit and not pre-cached - wtf?\n");
 
-    // DOS remains, 8bit handling
-    //sfx->data = (void *) W_CacheLumpNum(sfx->lumpnum, PU_MUSIC);
-    // fprintf( stderr,
-    //	     "S_StartSoundAtVolume: loading %d (lump %d) : 0x%x\n",
-    //       sfx_id, sfx->lumpnum, (int)sfx->data );
+//     // DOS remains, 8bit handling
+//     //sfx->data = (void *) W_CacheLumpNum(sfx->lumpnum, PU_MUSIC);
+//     // fprintf( stderr,
+//     //	     "S_StartSoundAtVolume: loading %d (lump %d) : 0x%x\n",
+//     //       sfx_id, sfx->lumpnum, (int)sfx->data );
     
-  }
-#endif
+//   }
+// #endif
   
-  // increase the usefulness
-  if (sfx->usefulness++ < 0)
-    sfx->usefulness = 1;
+//   // increase the usefulness
+//   if (sfx->usefulness++ < 0)
+//     sfx->usefulness = 1;
   
-  // Assigns the handle to one of the channels in the
-  //  mix/output buffer.
-  channels[cnum].handle = I_StartSound(sfx_id,
-				       /*sfx->data,*/
-				       volume,
-				       sep,
-				       pitch,
-				       priority);
-}	
+//   // Assigns the handle to one of the channels in the
+//   //  mix/output buffer.
+//   channels[cnum].handle = I_StartSound(sfx_id,
+// 				       /*sfx->data,*/
+// 				       volume,
+// 				       sep,
+// 				       pitch,
+// 				       priority);
+// }	
 
 void
 S_StartSound
 ( void*		origin,
-  int		sfx_id )
+  int		sfx_id ) {}
+/*
 {
 #ifdef SAWDEBUG
     // if (sfx_id == sfx_sawful)
@@ -464,11 +468,12 @@ S_StartSound
 #endif
  
 }
+*/
 
 
 
-
-void S_StopSound(void *origin)
+void S_StopSound(void *origin) {}
+/*
 {
 
     int cnum;
@@ -482,7 +487,7 @@ void S_StopSound(void *origin)
 	}
     }
 }
-
+*/
 
 
 
@@ -494,126 +499,128 @@ void S_StopSound(void *origin)
 //
 // Stop and resume music, during game PAUSE.
 //
-void S_PauseSound(void)
-{
-    if (mus_playing && !mus_paused)
-    {
-	I_PauseSong(mus_playing->handle);
-	mus_paused = true;
-    }
-}
+void S_PauseSound(void) {}
+// {
+//     if (mus_playing && !mus_paused)
+//     {
+// 	I_PauseSong(mus_playing->handle);
+// 	mus_paused = true;
+//     }
+// }
 
-void S_ResumeSound(void)
-{
-    if (mus_playing && mus_paused)
-    {
-	I_ResumeSong(mus_playing->handle);
-	mus_paused = false;
-    }
-}
+void S_ResumeSound(void) {}
+// {
+//     if (mus_playing && mus_paused)
+//     {
+// 	I_ResumeSong(mus_playing->handle);
+// 	mus_paused = false;
+//     }
+// }
 
 
 //
 // Updates music & sounds
 //
-void S_UpdateSounds(void* listener_p)
-{
-    int		audible;
-    int		cnum;
-    int		volume;
-    int		sep;
-    int		pitch;
-    sfxinfo_t*	sfx;
-    channel_t*	c;
+void S_UpdateSounds(void* listener_p) {}
+// {
+//     int		audible;
+//     int		cnum;
+//     int		volume;
+//     int		sep;
+//     int		pitch;
+//     sfxinfo_t*	sfx;
+//     channel_t*	c;
     
-    mobj_t*	listener = (mobj_t*)listener_p;
+//     mobj_t*	listener = (mobj_t*)listener_p;
 
 
     
-    // Clean up unused data.
-    // This is currently not done for 16bit (sounds cached static).
-    // DOS 8bit remains. 
-    /*if (gametic > nextcleanup)
-    {
-	for (i=1 ; i<NUMSFX ; i++)
-	{
-	    if (S_sfx[i].usefulness < 1
-		&& S_sfx[i].usefulness > -1)
-	    {
-		if (--S_sfx[i].usefulness == -1)
-		{
-		    Z_ChangeTag(S_sfx[i].data, PU_CACHE);
-		    S_sfx[i].data = 0;
-		}
-	    }
-	}
-	nextcleanup = gametic + 15;
-    }*/
+//     // Clean up unused data.
+//     // This is currently not done for 16bit (sounds cached static).
+//     // DOS 8bit remains. 
+//     /*if (gametic > nextcleanup)
+//     {
+// 	for (i=1 ; i<NUMSFX ; i++)
+// 	{
+// 	    if (S_sfx[i].usefulness < 1
+// 		&& S_sfx[i].usefulness > -1)
+// 	    {
+// 		if (--S_sfx[i].usefulness == -1)
+// 		{
+// 		    Z_ChangeTag(S_sfx[i].data, PU_CACHE);
+// 		    S_sfx[i].data = 0;
+// 		}
+// 	    }
+// 	}
+// 	nextcleanup = gametic + 15;
+//     }*/
     
-    for (cnum=0 ; cnum<numChannels ; cnum++)
-    {
-	c = &channels[cnum];
-	sfx = c->sfxinfo;
+//     for (cnum=0 ; cnum<numChannels ; cnum++)
+//     {
+// 	c = &channels[cnum];
+// 	sfx = c->sfxinfo;
 
-	if (c->sfxinfo)
-	{
-	    if (I_SoundIsPlaying(c->handle))
-	    {
-		// initialize parameters
-		volume = snd_SfxVolume;
-		pitch = NORM_PITCH;
-		sep = NORM_SEP;
+// 	if (c->sfxinfo)
+// 	{
+// 	    if (I_SoundIsPlaying(c->handle))
+// 	    {
+// 		// initialize parameters
+// 		volume = snd_SfxVolume;
+// 		pitch = NORM_PITCH;
+// 		sep = NORM_SEP;
 
-		if (sfx->link)
-		{
-		    pitch = sfx->pitch;
-		    volume += sfx->volume;
-		    if (volume < 1)
-		    {
-			S_StopChannel(cnum);
-			continue;
-		    }
-		    else if (volume > snd_SfxVolume)
-		    {
-			volume = snd_SfxVolume;
-		    }
-		}
+// 		if (sfx->link)
+// 		{
+// 		    pitch = sfx->pitch;
+// 		    volume += sfx->volume;
+// 		    if (volume < 1)
+// 		    {
+// 			S_StopChannel(cnum);
+// 			continue;
+// 		    }
+// 		    else if (volume > snd_SfxVolume)
+// 		    {
+// 			volume = snd_SfxVolume;
+// 		    }
+// 		}
 
-		// check non-local sounds for distance clipping
-		//  or modify their params
-		if (c->origin && listener_p != c->origin)
-		{
-		    audible = S_AdjustSoundParams(listener,
-						  c->origin,
-						  &volume,
-						  &sep,
-						  &pitch);
+// 		// check non-local sounds for distance clipping
+// 		//  or modify their params
+// 		if (c->origin && listener_p != c->origin)
+// 		{
+// 		    audible = S_AdjustSoundParams(listener,
+// 						  c->origin,
+// 						  &volume,
+// 						  &sep,
+// 						  &pitch);
 		    
-		    if (!audible)
-		    {
-			S_StopChannel(cnum);
-		    }
-		    else
-			I_UpdateSoundParams(c->handle, volume, sep, pitch);
-		}
-	    }
-	    else
-	    {
-		// if channel is allocated but sound has stopped,
-		//  free it
-		S_StopChannel(cnum);
-	    }
-	}
-    }
-    // kill music if it is a single-play && finished
-    // if (	mus_playing
-    //      && !I_QrySongPlaying(mus_playing->handle)
-    //      && !mus_paused )
-    // S_StopMusic();
-}
+// 		    if (!audible)
+// 		    {
+// 			S_StopChannel(cnum);
+// 		    }
+// 		    else
+// 			I_UpdateSoundParams(c->handle, volume, sep, pitch);
+// 		}
+// 	    }
+// 	    else
+// 	    {
+// 		// if channel is allocated but sound has stopped,
+// 		//  free it
+// 		S_StopChannel(cnum);
+// 	    }
+// 	}
+//     }
+//     // kill music if it is a single-play && finished
+//     // if (	mus_playing
+//     //      && !I_QrySongPlaying(mus_playing->handle)
+//     //      && !mus_paused )
+//     // S_StopMusic();
+// }
 
 
-void S_SetMusicVolume(int volume)
+
+void S_SetMusicVolume(int volume) {}
+/*
 {
     if (volume < 0 || volume > 127)
     {
@@ -625,10 +632,11 @@ void S_SetMusicVolume(int volume)
     I_SetMusicVolume(volume);
     snd_MusicVolume = volume;
 }
+*/
 
 
-
-void S_SetSfxVolume(int volume)
+void S_SetSfxVolume(int volume) {}
+/*
 {
 
     if (volume < 0 || volume > 127)
@@ -637,19 +645,21 @@ void S_SetSfxVolume(int volume)
     snd_SfxVolume = volume;
 
 }
+*/
 
 //
 // Starts some music with the music id found in sounds.h.
 //
 void S_StartMusic(int m_id)
 {
-    S_ChangeMusic(m_id, false);
+    // S_ChangeMusic(m_id, false);
 }
 
 void
 S_ChangeMusic
 ( int			musicnum,
-  int			looping )
+  int			looping ) {}
+/*
 {
     musicinfo_t*	music;
     char		namebuf[9];
@@ -684,9 +694,11 @@ S_ChangeMusic
 
     mus_playing = music;
 }
+*/
 
 
-void S_StopMusic(void)
+void S_StopMusic(void) {}
+/*
 {
     if (mus_playing)
     {
@@ -701,11 +713,13 @@ void S_StopMusic(void)
 	mus_playing = 0;
     }
 }
+*/
 
 
 
 
-void S_StopChannel(int cnum)
+void S_StopChannel(int cnum) {}
+/*
 {
 
     int		i;
@@ -740,6 +754,7 @@ void S_StopChannel(int cnum)
 	c->sfxinfo = 0;
     }
 }
+*/
 
 
 

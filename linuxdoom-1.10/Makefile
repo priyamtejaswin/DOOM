@@ -16,6 +16,9 @@ LIBS=-lXext -lX11 -lm
 O=linux
 
 # REMOVED $(O)/i_sound.o from OBJS
+# REMOVED $(O)/s_sound.o
+# REMOVED $(O)/sounds.o
+
 # not too sophisticated dependency
 OBJS=				\
 		$(O)/doomdef.o		\
@@ -74,10 +77,9 @@ OBJS=				\
 		$(O)/st_stuff.o		\
 		$(O)/hu_stuff.o		\
 		$(O)/hu_lib.o			\
-		$(O)/s_sound.o		\
+		$(O)/s_sound.o			\
 		$(O)/z_zone.o			\
-		$(O)/info.o				\
-		$(O)/sounds.o
+		$(O)/info.o				
 
 all:	 $(O)/linuxxdoom
 

@@ -111,7 +111,7 @@ void F_StartFinale (void)
       case registered:
       case retail:
       {
-	S_ChangeMusic(mus_victor, true);
+	// S_ChangeMusic(mus_victor, true);
 	
 	switch (gameepisode)
 	{
@@ -141,7 +141,7 @@ void F_StartFinale (void)
       // DOOM II and missions packs with E1, M34
       case commercial:
       {
-	  S_ChangeMusic(mus_read_m, true);
+	//   S_ChangeMusic(mus_read_m, true);
 
 	  switch (gamemap)
 	  {
@@ -179,7 +179,7 @@ void F_StartFinale (void)
    
       // Indeterminate.
       default:
-	S_ChangeMusic(mus_read_m, true);
+	// S_ChangeMusic(mus_read_m, true);
 	finaleflat = "F_SKY1"; // Not used anywhere else.
 	finaletext = c1text;  // FIXME - other text, music?
 	break;
@@ -244,7 +244,8 @@ void F_Ticker (void)
 	finalestage = 1;
 	wipegamestate = -1;		// force a wipe
 	if (gameepisode == 3)
-	    S_StartMusic (mus_bunny);
+		printf("Printing instead of S_StartMusic (mus_bunny)");
+	    // S_StartMusic (mus_bunny);
     }
 }
 
@@ -385,7 +386,7 @@ void F_StartCast (void)
     castframes = 0;
     castonmelee = 0;
     castattacking = false;
-    S_ChangeMusic(mus_evil, true);
+    // S_ChangeMusic(mus_evil, true);
 }
 
 
@@ -408,7 +409,8 @@ void F_CastTicker (void)
 	if (castorder[castnum].name == NULL)
 	    castnum = 0;
 	if (mobjinfo[castorder[castnum].type].seesound)
-	    S_StartSound (NULL, mobjinfo[castorder[castnum].type].seesound);
+		printf("S_StartSound (NULL, mobjinfo[castorder[castnum].type].seesound);");
+	    // S_StartSound (NULL, mobjinfo[castorder[castnum].type].seesound);
 	caststate = &states[mobjinfo[castorder[castnum].type].seestate];
 	castframes = 0;
     }
@@ -454,7 +456,8 @@ void F_CastTicker (void)
 	}
 		
 	if (sfx)
-	    S_StartSound (NULL, sfx);
+		printf("S_StartSound (NULL, sfx);");
+	    // S_StartSound (NULL, sfx);
     }
 	
     if (castframes == 12)
@@ -514,7 +517,8 @@ boolean F_CastResponder (event_t* ev)
     castframes = 0;
     castattacking = false;
     if (mobjinfo[castorder[castnum].type].deathsound)
-	S_StartSound (NULL, mobjinfo[castorder[castnum].type].deathsound);
+	printf("S_StartSound (NULL, mobjinfo[castorder[castnum].type].deathsound);");
+	// S_StartSound (NULL, mobjinfo[castorder[castnum].type].deathsound);
 	
     return true;
 }
@@ -685,7 +689,8 @@ void F_BunnyScroll (void)
 	stage = 6;
     if (stage > laststage)
     {
-	S_StartSound (NULL, sfx_pistol);
+	printf("S_StartSound (NULL, sfx_pistol);");
+	// S_StartSound (NULL, sfx_pistol);
 	laststage = stage;
     }
 	

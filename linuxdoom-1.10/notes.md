@@ -72,3 +72,7 @@ Moving on.
 ## Sound errors.
 The code still references the sound interfaces in different places.
 First attempt, just comment them (all sound interface references) from everywhere.
+```bash
+# Regex ...
+(^|\W)S_
+```

@@ -827,7 +827,7 @@ void M_SfxVol(int choice)
 	break;
     }
 	
-    S_SetSfxVolume(snd_SfxVolume /* *8 */);
+    // S_SetSfxVolume(snd_SfxVolume /* *8 */);
 }
 
 void M_MusicVol(int choice)
@@ -844,7 +844,7 @@ void M_MusicVol(int choice)
 	break;
     }
 	
-    S_SetMusicVolume(snd_MusicVolume /* *8 */);
+    // S_SetMusicVolume(snd_MusicVolume /* *8 */);
 }
 
 

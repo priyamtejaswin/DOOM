@@ -706,9 +706,11 @@ void G_Ticker (void)
 		  case BTS_PAUSE: 
 		    paused ^= 1; 
 		    if (paused) 
-			S_PauseSound (); 
+            printf("Printing instead of S_PauseSound");
+			// S_PauseSound (); 
 		    else 
-			S_ResumeSound (); 
+            printf("Printing instead of S_ResumeSound");
+			// S_ResumeSound (); 
 		    break; 
 					 
 		  case BTS_SAVEGAME: 
@@ -883,7 +885,8 @@ G_CheckSpot
 		      , MT_TFOG); 
 	 
     if (players[consoleplayer].viewz != 1) 
-	S_StartSound (mo, sfx_telept);	// don't start sound on first frame 
+    printf("S_StartSound (mo, sfx_telept);");
+	// S_StartSound (mo, sfx_telept);	// don't start sound on first frame 
  
     return true; 
 } 
@@ -1372,7 +1375,7 @@ G_InitNew
     if (paused) 
     { 
 	paused = false; 
-	S_ResumeSound (); 
+	// S_ResumeSound (); 
     } 
 	
 
